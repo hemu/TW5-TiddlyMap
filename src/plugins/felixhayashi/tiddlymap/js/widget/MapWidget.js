@@ -947,25 +947,26 @@ class MapWidget extends Widget {
         const allNodes = Object.keys(this.graphData.nodesById);
         this.network.selectNodes(allNodes);
 
-      } else if (ev.keyCode === 49 || ev.keyCode === 50) { // 1 || 2
-        if (nodeIds.length !== 1) return;
-
-        const role = ev.keyCode === 49 ? 'from' : 'to';
-        $tm.notify(utils.ucFirst(role) + '-part selected');
-
-        this.conVector[role] = nodeIds[0];
-        if (this.conVector.from && this.conVector.to) {
-          // create the edge
-          this.handleConnectionEvent(this.conVector, () => {
-            // reset both properties, regardless whether confirmed
-            this.conVector = { from: null, to: null };
-          });
-        }
-
+      // } else if (ev.keyCode === 49 || ev.keyCode === 50) { // 1 || 2
+      //   if (nodeIds.length !== 1) return;
+      //
+      //   const role = ev.keyCode === 49 ? 'from' : 'to';
+      //   $tm.notify(utils.ucFirst(role) + '-part selected');
+      //
+      //   this.conVector[role] = nodeIds[0];
+      //   if (this.conVector.from && this.conVector.to) {
+      //     // create the edge
+      //     this.handleConnectionEvent(this.conVector, () => {
+      //       // reset both properties, regardless whether confirmed
+      //       this.conVector = { from: null, to: null };
+      //     });
+      //   }
+      } else if (ev.keyCode >= 48 && ev.keyCode <= 57) { // any number
+        const scopeStr = String.fromCharCode(ev.keyCode);
+        this.view.setConfig('neighbourhood_scope', scopeStr);
       }
 
     } else { // ctrl is not pressed
-
       if (ev.keyCode === 13) { // ENTER
 
         if (nodeIds.length !== 1) return;
